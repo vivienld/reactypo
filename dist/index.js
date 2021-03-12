@@ -86,7 +86,7 @@ var Char = /*#__PURE__*/function (_Component) {
         this.hide();
         console.log('hide');
       } else if (this.props.animate) {
-        this.animate();
+        this.play();
         console.log('animate');
       }
 
@@ -118,11 +118,21 @@ var Char = /*#__PURE__*/function (_Component) {
     });
   };
 
-  _proto.animate = function animate() {
+  _proto.play = function play() {
+    var _this2 = this;
+
     var Component = StyledComponents[this.props.animation](this.props.duration);
     this.setState({
       display: React__default.createElement(Component, null, this.props.children)
+    }, function () {
+      _this2.onPlay();
     });
+  };
+
+  _proto.onPlay = function onPlay() {
+    var _this$props$onPlay, _this$props;
+
+    (_this$props$onPlay = (_this$props = this.props).onPlay) === null || _this$props$onPlay === void 0 ? void 0 : _this$props$onPlay.call(_this$props, this);
   };
 
   return Char;

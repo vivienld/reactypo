@@ -7,6 +7,7 @@ interface Props {
     animate: boolean;
     unload: boolean;
     animation: Animation;
+    onPlay?: (char: Char) => void;
 }
 interface State {
     display: JSX.Element | null;
@@ -29,6 +30,7 @@ export default class Char extends Component<Props, State> {
     load(): void;
     unload(): void;
     hide(): void;
-    animate(): void;
+    play(): void;
+    onPlay(): void;
 }
 export {};

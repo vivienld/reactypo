@@ -69,7 +69,7 @@ class Char extends Component {
         this.hide();
         console.log('hide');
       } else if (this.props.animate) {
-        this.animate();
+        this.play();
         console.log('animate');
       }
 
@@ -101,11 +101,19 @@ class Char extends Component {
     });
   }
 
-  animate() {
+  play() {
     const Component = StyledComponents[this.props.animation](this.props.duration);
     this.setState({
       display: React.createElement(Component, null, this.props.children)
+    }, () => {
+      this.onPlay();
     });
+  }
+
+  onPlay() {
+    var _this$props$onPlay, _this$props;
+
+    (_this$props$onPlay = (_this$props = this.props).onPlay) === null || _this$props$onPlay === void 0 ? void 0 : _this$props$onPlay.call(_this$props, this);
   }
 
 }

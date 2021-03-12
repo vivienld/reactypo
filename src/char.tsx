@@ -9,6 +9,7 @@ interface Props {
     animate: boolean;
     unload: boolean;
     animation: Animation;
+    onPlay?: (char: Char) => void;
 }
 
 interface State {
@@ -50,7 +51,7 @@ export default class Char extends Component<Props, State> {
                 this.hide()
                 console.log('hide')
             } else if (this.props.animate) {
-                this.animate()
+                this.play()
                 console.log('animate')
             }
 
@@ -80,10 +81,16 @@ export default class Char extends Component<Props, State> {
         })
     }
 
-    animate() {
+    play() {
         const Component = StyledComponents[this.props.animation](this.props.duration);
         this.setState({
             display: <Component>{this.props.children}</Component>
+        }, () => {
+            this.onPlay();
         })
+    }
+
+    onPlay() {
+        this.props.onPlay?.(this);
     }
 }
