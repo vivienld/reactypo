@@ -1,10 +1,17 @@
 import React from 'react'
 
-import { ExampleComponent } from 'typo'
-import 'typo/dist/index.css'
+import { Char, Animation } from 'typo'
 
 const App = () => {
-  return <ExampleComponent text="Create React Library Example 😄" />
+  return (
+    <>
+      <Char animation={Animation.rotateInVer} duration={1000} hide>a</Char>
+      <Char animation={Animation.rotateInVer} duration={1000}>b</Char>
+      <Char animation={Animation.rotateInVer} duration={1000} unload>c</Char>
+      <Char animation={Animation.rotateInVer} duration={1000}>d</Char>
+      <Char animation={Animation.rotateInVer} duration={1000}>e</Char>
+    </>
+  )
 }
 
 export default App
