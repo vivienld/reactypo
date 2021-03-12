@@ -81,28 +81,39 @@ var Char = /*#__PURE__*/function (_Component) {
     }
   };
 
-  _proto.load = function load() {
+  _proto.play = function play() {
     var _this2 = this;
+
+    var Component = this.props.component(this.props.duration);
+    this.setState({
+      display: React__default.createElement(Component, null, this.props.children)
+    }, function () {
+      _this2.onPlay();
+    });
+  };
+
+  _proto.load = function load() {
+    var _this3 = this;
 
     this.setState({
       display: React__default.createElement(this.baseComponent, null, this.props.children)
     }, function () {
-      _this2.onLoad();
+      _this3.onLoad();
     });
   };
 
   _proto.unload = function unload() {
-    var _this3 = this;
+    var _this4 = this;
 
     this.setState({
       display: null
     }, function () {
-      _this3.onUnload();
+      _this4.onUnload();
     });
   };
 
   _proto.hide = function hide() {
-    var _this4 = this;
+    var _this5 = this;
 
     var Component = Style.span(StyledComponents.base());
     this.setState({
@@ -112,18 +123,7 @@ var Char = /*#__PURE__*/function (_Component) {
         }
       }, this.props.children)
     }, function () {
-      _this4.onHide();
-    });
-  };
-
-  _proto.play = function play() {
-    var _this5 = this;
-
-    var Component = this.props.component(this.props.duration);
-    this.setState({
-      display: React__default.createElement(Component, null, this.props.children)
-    }, function () {
-      _this5.onPlay();
+      _this5.onHide();
     });
   };
 

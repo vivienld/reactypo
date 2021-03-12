@@ -30,10 +30,10 @@ export default class Char extends Component<Props, State> {
      */
     componentDidMount(): void;
     render: () => JSX.Element;
+    play(): void;
     load(): void;
     unload(): void;
     hide(): void;
-    play(): void;
     onPlay(): void;
     onLoad(): void;
     onUnload(): void;

@@ -60,6 +60,15 @@ export default class Char extends Component<Props, State> {
 
     render = () => <Fragment>{this.state?.display}</Fragment>;
 
+    play() {
+        const Component = this.props.component(this.props.duration);
+        this.setState({
+            display: <Component>{this.props.children}</Component>
+        }, () => {
+            this.onPlay();
+        })
+    }
+
     load() {
         this.setState({
             display: <this.baseComponent>{this.props.children}</this.baseComponent>
@@ -77,15 +86,6 @@ export default class Char extends Component<Props, State> {
         this.setState({
             display: <Component style={{ visibility: 'hidden' }}>{this.props.children}</Component>
         }, () => { this.onHide() })
-    }
-
-    play() {
-        const Component = this.props.component(this.props.duration);
-        this.setState({
-            display: <Component>{this.props.children}</Component>
-        }, () => {
-            this.onPlay();
-        })
     }
 
     onPlay() {

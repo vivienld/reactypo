@@ -64,6 +64,15 @@ class Char extends Component {
     }
   }
 
+  play() {
+    const Component = this.props.component(this.props.duration);
+    this.setState({
+      display: React.createElement(Component, null, this.props.children)
+    }, () => {
+      this.onPlay();
+    });
+  }
+
   load() {
     this.setState({
       display: React.createElement(this.baseComponent, null, this.props.children)
@@ -90,15 +99,6 @@ class Char extends Component {
       }, this.props.children)
     }, () => {
       this.onHide();
-    });
-  }
-
-  play() {
-    const Component = this.props.component(this.props.duration);
-    this.setState({
-      display: React.createElement(Component, null, this.props.children)
-    }, () => {
-      this.onPlay();
     });
   }
 
