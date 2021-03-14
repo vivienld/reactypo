@@ -117,8 +117,14 @@ export default class Text extends Component<Props, State> {
     }
 
     onPlay() {
+        const rewind = this.props.parent?.props.rewind || this.props.rewind;
+        const char = rewind
+            ? this.str[this.iteration + 1]
+            : this.str[this.iteration - 1];
+
         this.props.onPlay?.(this);
-        this.props.parent?.props.onChar?.(this.str[this.iteration + 1], this.props.parent);
+
+        this.props.parent?.props.onChar?.(char, this.props.parent);
     }
 
     onStop() {

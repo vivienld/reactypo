@@ -161,10 +161,14 @@ var Text = /*#__PURE__*/function (_Component) {
   };
 
   _proto.onPlay = function onPlay() {
-    var _this$props$onPlay, _this$props2, _this$props$parent5, _this$props$parent5$p, _this$props$parent5$p2;
+    var _this$props$parent5, _this$props$onPlay, _this$props2, _this$props$parent6, _this$props$parent6$p, _this$props$parent6$p2;
+
+    var rewind = ((_this$props$parent5 = this.props.parent) === null || _this$props$parent5 === void 0 ? void 0 : _this$props$parent5.props.rewind) || this.props.rewind;
+
+    var _char4 = rewind ? this.str[this.iteration + 1] : this.str[this.iteration - 1];
 
     (_this$props$onPlay = (_this$props2 = this.props).onPlay) === null || _this$props$onPlay === void 0 ? void 0 : _this$props$onPlay.call(_this$props2, this);
-    (_this$props$parent5 = this.props.parent) === null || _this$props$parent5 === void 0 ? void 0 : (_this$props$parent5$p = (_this$props$parent5$p2 = _this$props$parent5.props).onChar) === null || _this$props$parent5$p === void 0 ? void 0 : _this$props$parent5$p.call(_this$props$parent5$p2, this.str[this.iteration + 1], this.props.parent);
+    (_this$props$parent6 = this.props.parent) === null || _this$props$parent6 === void 0 ? void 0 : (_this$props$parent6$p = (_this$props$parent6$p2 = _this$props$parent6.props).onChar) === null || _this$props$parent6$p === void 0 ? void 0 : _this$props$parent6$p.call(_this$props$parent6$p2, _char4, this.props.parent);
   };
 
   _proto.onStop = function onStop() {
