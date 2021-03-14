@@ -11,7 +11,7 @@ const App = () => {
     </div>
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
 
-      <Typo name='subtitle' next='title' rewind>
+      <Typo name='subtitle' next='title' >
         <Text charClassName="reactypo-subtitle swirl-in-fwd">Easy text animation</Text>
       </Typo>
 

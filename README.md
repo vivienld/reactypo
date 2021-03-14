@@ -193,6 +193,12 @@ Those props will be used by every `Text` child that don't define them.
       <td>0</td>
     </tr>
     <tr>
+      <td>first?</td>
+      <td>boolean</td>
+      <td>Defines the typo as the first to launch when its name is in the ̀ next` props of another typo</td>
+      <td>false</td>
+    </tr>
+    <tr>
       <td>stamp?</td>
       <td>boolean</td>
       <td>Displays all the chars in every Text at once</td>
