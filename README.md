@@ -1,22 +1,22 @@
-# Typo
+# Reactypo
 
-Typo is a react library that makes it easy to give your text a typewriter effect.
+Reactypo is a react library that makes it easy to give your text a typewriter effect.
 
 ## Installation
 
 ```bash
-npm install --save typo
+npm install --save reactypo
 ```
 
 ## Example
 
-Example can be seen [here](https://vivienld.github.io/typo/)
+Example can be seen [here](https://vivienld.github.io/reactypo/)
 
 ## Basic Usage
 
 ```tsx
 import React from 'react'
-import { Text, Typo } from 'typo'
+import { Text, Typo } from 'reactypo'
 
 const App = () => {
   return (

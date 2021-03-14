@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Text, Typo } from 'typo'
+import { Text, Typo } from 'reactypo'
 
 const App = () => {
   return (
