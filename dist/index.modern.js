@@ -168,7 +168,6 @@ class Typo extends Component {
 
   init() {
     this.initiated = false;
-    this.iteration = !this.props.rewind ? 0 : (this.props.children || '').length - 1;
     this.texts = React.Children.map(this.props.children, child => {
       let ref = React.createRef();
       this.textRefs.push(ref);
@@ -179,6 +178,7 @@ class Typo extends Component {
         rewind: this.props.rewind
       }), child.props.children || '');
     });
+    this.iteration = !this.props.rewind ? 0 : this.texts.length == 1 ? 0 : this.texts.length - 1;
     this.name = this.props.name || '_' + Math.random().toString(36).substr(2, 9);
     Typo.typos.set(this.name, this);
 
@@ -196,7 +196,7 @@ class Typo extends Component {
     if (this.props.rewind && this.iteration < 0 || !this.props.rewind && this.iteration > this.texts.length - 1) {
       this.stop();
     } else {
-      var _this$textRefs$this$i;
+      var _this$textRefs$this$i, _this$textRefs$this$i2;
 
       if (this.props.rewind) {
         for (let i = this.iteration; i >= 0; i--) {
@@ -206,7 +206,7 @@ class Typo extends Component {
         }
       }
 
-      (_this$textRefs$this$i = this.textRefs[this.iteration].current) === null || _this$textRefs$this$i === void 0 ? void 0 : _this$textRefs$this$i.play();
+      (_this$textRefs$this$i = this.textRefs[this.iteration]) === null || _this$textRefs$this$i === void 0 ? void 0 : (_this$textRefs$this$i2 = _this$textRefs$this$i.current) === null || _this$textRefs$this$i2 === void 0 ? void 0 : _this$textRefs$this$i2.play();
       this.iteration += this.props.rewind ? -1 : 1;
       this.onText();
     }
@@ -223,7 +223,9 @@ class Typo extends Component {
   }
 
   onText() {
-    const text = this.props.rewind ? this.textRefs[this.iteration + 1].current : this.textRefs[this.iteration - 1].current;
+    var _this$textRefs, _this$textRefs2;
+
+    const text = this.props.rewind ? (_this$textRefs = this.textRefs[this.iteration + 1]) === null || _this$textRefs === void 0 ? void 0 : _this$textRefs.current : (_this$textRefs2 = this.textRefs[this.iteration - 1]) === null || _this$textRefs2 === void 0 ? void 0 : _this$textRefs2.current;
 
     if (text) {
       var _this$props$onText, _this$props2;
@@ -246,7 +248,11 @@ class Typo extends Component {
   }
 
   render() {
-    return React.createElement(React.Fragment, null, this.texts);
+    return React.createElement("div", {
+      style: {
+        display: 'inline-block'
+      }
+    }, this.texts);
   }
 
 }

@@ -73,7 +73,6 @@ export default class Typo extends Component<Props, State> {
     init() {
         this.initiated = false;
 
-        this.iteration = !this.props.rewind ? 0 : (this.props.children as string || '').length - 1;
         
         this.texts = React.Children.map(this.props.children as JSX.Element, child => {
             let ref = React.createRef<Text>();
@@ -82,6 +81,8 @@ export default class Typo extends Component<Props, State> {
             return <Text {...child.props} ref={ref} parent={this} rewind={this.props.rewind}>{child.props.children || ''}</Text>
         })
         
+        this.iteration = !this.props.rewind ? 0 : this.texts.length == 1 ? 0 : this.texts.length - 1;
+
         this.name = this.props.name || '_' + Math.random().toString(36).substr(2, 9);
 
         Typo.typos.set(this.name, this);
@@ -106,8 +107,8 @@ export default class Typo extends Component<Props, State> {
                     this.textRefs[i].current?.show();
                 }
             }
-            
-            this.textRefs[this.iteration].current?.play();
+                
+            this.textRefs[this.iteration]?.current?.play();
             
             this.iteration += this.props.rewind ? -1 : 1;
             this.onText();
@@ -124,8 +125,8 @@ export default class Typo extends Component<Props, State> {
 
     onText() {
         const text = this.props.rewind
-            ? this.textRefs[this.iteration + 1].current
-            : this.textRefs[this.iteration - 1].current;
+            ? this.textRefs[this.iteration + 1]?.current
+            : this.textRefs[this.iteration - 1]?.current;
 
         if (text) {
             this.props.onText?.(text, this);
@@ -142,6 +143,6 @@ export default class Typo extends Component<Props, State> {
     }
 
     render() {
-        return <React.Fragment>{this.texts}</React.Fragment>
+        return <div style={{ display: 'inline-block' }}>{this.texts}</div>
     }
 }

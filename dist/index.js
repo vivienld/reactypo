@@ -220,7 +220,6 @@ var Typo = /*#__PURE__*/function (_Component) {
     var _this3 = this;
 
     this.initiated = false;
-    this.iteration = !this.props.rewind ? 0 : (this.props.children || '').length - 1;
     this.texts = React__default.Children.map(this.props.children, function (child) {
       var ref = React__default.createRef();
 
@@ -233,6 +232,7 @@ var Typo = /*#__PURE__*/function (_Component) {
         rewind: _this3.props.rewind
       }), child.props.children || '');
     });
+    this.iteration = !this.props.rewind ? 0 : this.texts.length == 1 ? 0 : this.texts.length - 1;
     this.name = this.props.name || '_' + Math.random().toString(36).substr(2, 9);
     Typo.typos.set(this.name, this);
 
@@ -250,7 +250,7 @@ var Typo = /*#__PURE__*/function (_Component) {
     if (this.props.rewind && this.iteration < 0 || !this.props.rewind && this.iteration > this.texts.length - 1) {
       this.stop();
     } else {
-      var _this$textRefs$this$i;
+      var _this$textRefs$this$i, _this$textRefs$this$i2;
 
       if (this.props.rewind) {
         for (var i = this.iteration; i >= 0; i--) {
@@ -260,7 +260,7 @@ var Typo = /*#__PURE__*/function (_Component) {
         }
       }
 
-      (_this$textRefs$this$i = this.textRefs[this.iteration].current) === null || _this$textRefs$this$i === void 0 ? void 0 : _this$textRefs$this$i.play();
+      (_this$textRefs$this$i = this.textRefs[this.iteration]) === null || _this$textRefs$this$i === void 0 ? void 0 : (_this$textRefs$this$i2 = _this$textRefs$this$i.current) === null || _this$textRefs$this$i2 === void 0 ? void 0 : _this$textRefs$this$i2.play();
       this.iteration += this.props.rewind ? -1 : 1;
       this.onText();
     }
@@ -277,7 +277,9 @@ var Typo = /*#__PURE__*/function (_Component) {
   };
 
   _proto.onText = function onText() {
-    var text = this.props.rewind ? this.textRefs[this.iteration + 1].current : this.textRefs[this.iteration - 1].current;
+    var _this$textRefs, _this$textRefs2;
+
+    var text = this.props.rewind ? (_this$textRefs = this.textRefs[this.iteration + 1]) === null || _this$textRefs === void 0 ? void 0 : _this$textRefs.current : (_this$textRefs2 = this.textRefs[this.iteration - 1]) === null || _this$textRefs2 === void 0 ? void 0 : _this$textRefs2.current;
 
     if (text) {
       var _this$props$onText, _this$props2;
@@ -300,7 +302,11 @@ var Typo = /*#__PURE__*/function (_Component) {
   };
 
   _proto.render = function render() {
-    return React__default.createElement(React__default.Fragment, null, this.texts);
+    return React__default.createElement("div", {
+      style: {
+        display: 'inline-block'
+      }
+    }, this.texts);
   };
 
   return Typo;
