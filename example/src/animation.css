@@ -1,10 +1,12 @@
-@keyframes rotate-in-center {
-  0% {
-    -webkit-transform: rotate(-360deg);
-            transform: rotate(-360deg);
-  }
-  100% {
-    -webkit-transform: rotate(0);
-            transform: rotate(0);
-  }
+:root{
+  --axis-y: -1rem;
+}
+
+@keyframes wave {
+ 0%, 100% {
+  transform: translatey(0); 
+ }
+ 33%,66% {
+  transform: translatey(var(--axis-y));
+ }
 }
