@@ -2,6 +2,10 @@
 
 Reactypo is a react library that makes it easy to give your text a typewriter effect.
 
+## Status 
+
+[![npm version](https://badge.fury.io/js/reactypo.svg)](https://badge.fury.io/js/reactypo)
+
 ## Installation
 
 ```bash
