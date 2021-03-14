@@ -5,7 +5,7 @@ import { Text, Typo } from 'typo'
 const App = () => {
 
   return (
-    <Typo pause={1000} pace={100} rewind
+    <Typo pause={1000} pace={100}
       onStart={(typo) => console.log(typo + ' typo start')}
       onPlay={(typo) => console.log(typo + ' typo play')}
       onStop={(typo) => console.log(typo + ' typo stop')}
