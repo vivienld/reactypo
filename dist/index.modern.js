@@ -149,7 +149,7 @@ class Text extends Component {
       style: {
         display: this.props.block ? 'block' : 'inline-block'
       }
-    }, (_this$state = this.state) === null || _this$state === void 0 ? void 0 : _this$state.display);
+    }, ((_this$state = this.state) === null || _this$state === void 0 ? void 0 : _this$state.display) || '\u00a0');
   }
 
 }
@@ -175,7 +175,7 @@ class Typo extends Component {
       return React.createElement(Text, Object.assign({}, child.props, {
         ref: ref,
         parent: this,
-        rewind: this.props.rewind
+        rewind: this.props.rewind || child.props.rewind
       }), child.props.children || '');
     });
     this.iteration = !this.props.rewind ? 0 : this.texts.length == 1 ? 0 : this.texts.length - 1;
@@ -254,6 +254,7 @@ class Typo extends Component {
 
   render() {
     return React.createElement("div", {
+      className: this.props.className,
       style: {
         display: 'inline-block'
       }

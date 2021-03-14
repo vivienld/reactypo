@@ -168,6 +168,6 @@ export default class Text extends Component<Props, State> {
     render() {
         return <div className={this.props.className} style={{
             display: this.props.block ? 'block' : 'inline-block'
-        }}>{this.state?.display}</div>
+        }}>{this.state?.display || '\u00a0'}</div>
     }
 }

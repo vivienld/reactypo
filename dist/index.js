@@ -187,7 +187,7 @@ var Text = /*#__PURE__*/function (_Component) {
       style: {
         display: this.props.block ? 'block' : 'inline-block'
       }
-    }, (_this$state = this.state) === null || _this$state === void 0 ? void 0 : _this$state.display);
+    }, ((_this$state = this.state) === null || _this$state === void 0 ? void 0 : _this$state.display) || "\xA0");
   };
 
   return Text;
@@ -231,7 +231,7 @@ var Typo = /*#__PURE__*/function (_Component) {
       return React__default.createElement(Text, Object.assign({}, child.props, {
         ref: ref,
         parent: _this3,
-        rewind: _this3.props.rewind
+        rewind: _this3.props.rewind || child.props.rewind
       }), child.props.children || '');
     });
     this.iteration = !this.props.rewind ? 0 : this.texts.length == 1 ? 0 : this.texts.length - 1;
@@ -310,6 +310,7 @@ var Typo = /*#__PURE__*/function (_Component) {
 
   _proto.render = function render() {
     return React__default.createElement("div", {
+      className: this.props.className,
       style: {
         display: 'inline-block'
       }

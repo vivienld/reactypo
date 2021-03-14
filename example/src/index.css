@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Fascinate&display=swap');
+
+html,body,#root{
+  height:100%;
+}
 
 body {
   margin: 0;
@@ -10,18 +14,82 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+
+.wave {animation:wave .5s ease-in-out 1;}
+.swirl-in-fwd{animation:swirl-in-fwd .25s ease-out both}
+
+.wave-infinite{animation:wave 1.5s ease-in-out infinite}
+
+.roll-in-left{-webkit-animation:roll-in-left .6s ease-out both;animation:roll-in-left .6s ease-out both}
+
+.main{
+  min-height:100%;
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
 .header{
-  text-align:center;
+  height:fit-content;
   padding:1rem;
-  background-color: rgb(38, 0, 255);
+  margin: 2rem .5rem 2rem .5rem;
+
+  position:relative;
+  left:50%;
+  transform: translateX(-50%) rotateZ(-1deg);
+  width:90%;
+
+  display:flex !important;
+  flex-direction: column;
+  flex:0;
+  box-shadow: .5rem .5rem .5rem  rgb(0, 52, 131);
+  background-color: rgb(0, 102, 255);
+  color: white;
+  
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size:5vw;
+}
+
+
+.title{
+  font-family: Fascinate, sans-serif;
+  text-align: center;
+  
+}
+
+.sub-title{
+  text-transform: uppercase;
+  font-family: "Sans Source Pro", sans-serif;
+  font-size:1.85vw;
+  text-align: center;
+}
+
+.title-char{
+  
+}
+
+.title2{
+  position: absolute;
+  left:50%;
+  transform: translate(-49%,3%);
+  color:rgb(0, 7, 100);
+  z-index:-1;
+}
+
+.sub-title-char{
+  box-shadow: .2rem .2rem .05rem  rgb(33, 0, 59);
+  margin:0 .1rem;
+  padding: 0 .25rem;
+  
+  background-color: rgb(140, 0, 255);
   color: white;
 }
 
-.reactypo-title{
-  font-family: Fascinate, sans-serif;
-  font-size:2rem;
-}
-
-.reactypo-subtitle{
-  font-size:1.5rem;
+.under-contruction{
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  
+  font-family: "Sans Source Pro", sans-serif;
+  font-size: 3vw;
 }

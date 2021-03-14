@@ -17,6 +17,8 @@ interface Props {
     next?: string;
     /** the name of the typo */
     name?: string;
+    /** the className of the typo container */
+    className?: string;
     /**
      * Called when the component is mounted
      * @param typo The current Typo component

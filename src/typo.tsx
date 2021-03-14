@@ -18,6 +18,8 @@ interface Props {
     next?: string;
     /** the name of the typo */
     name?: string;
+    /** the className of the typo container */
+    className?: string;
 
     /**
      * Called when the component is mounted
@@ -78,7 +80,7 @@ export default class Typo extends Component<Props, State> {
             let ref = React.createRef<Text>();
             this.textRefs.push(ref);
 
-            return <Text {...child.props} ref={ref} parent={this} rewind={this.props.rewind}>{child.props.children || ''}</Text>
+            return <Text {...child.props} ref={ref} parent={this} rewind={this.props.rewind || child.props.rewind}>{child.props.children || ''}</Text>
         })
         
         this.iteration = !this.props.rewind ? 0 : this.texts.length == 1 ? 0 : this.texts.length - 1;
@@ -144,6 +146,6 @@ export default class Typo extends Component<Props, State> {
     }
 
     render() {
-        return <div style={{ display: 'inline-block' }}>{this.texts}</div>
+        return <div className={this.props.className} style={{ display: 'inline-block' }}>{this.texts}</div>
     }
 }
