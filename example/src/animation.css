@@ -3,5 +3,8 @@
 }
 
 @keyframes wave {0%, 100% {transform: translatey(0)}50% {transform: translatey(var(--axis-y))}}
-
 @keyframes swirl-in-fwd{0%{transform:rotate(-540deg) scale(0);opacity:0}100%{transform:rotate(0) scale(1);opacity:1}}
+
+.wave {animation:wave .5s ease-in-out 1;}
+.swirl-in-fwd{animation:swirl-in-fwd .8s ease-out both}
+.wave-infinite{animation:wave 1.5s ease-in-out infinite}

@@ -70,7 +70,6 @@ export default class Text extends Component<Props, State> {
     }
     
     init() {
-        console.log('text init!')
         this.str = (this.props.children as string || '').replaceAll(' ', '\xa0');
         this.iteration = !this.props.rewind ? 0 : this.str.length - 1;
         this.stopped = false;

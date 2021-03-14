@@ -5,9 +5,13 @@ import { Text, Typo } from 'reactypo'
 const App = () => {
   return <>
     <div className='header'>
-      <Typo name={'title'} next={'hello-world'} first>
-        <Text pace={250} charClassName="reactypo-title wave-infinite" block rewind>Reactypo</Text>
-        <Text charClassName="reactypo-subtitle swirl-in-fwd">Easy text animation</Text>
+      <Typo name={'title'} next={'sub-title'} first>
+        <Text pace={200} charClassName="reactypo-title wave-infinite" block rewind>Reactypo</Text>
+      </Typo>
+    </div>
+    <div className='header'>
+      <Typo name={'sub-title'} next={'hello-world'} first>
+        <Text pace={1} charClassName="reactypo-subtitle swirl-in-fwd">Easy text animation</Text>
       </Typo>
     </div>
 

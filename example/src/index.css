@@ -10,12 +10,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-
-.wave {animation:wave .5s ease-in-out 1;}
-.swirl-in-fwd{animation:swirl-in-fwd .25s ease-out both}
-
-.wave-infinite{animation:wave 1.5s ease-in-out infinite}
-
 .header{
   text-align:center;
   padding:1rem;

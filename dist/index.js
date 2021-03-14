@@ -47,7 +47,6 @@ var Text = /*#__PURE__*/function (_Component) {
   };
 
   _proto.init = function init() {
-    console.log('text init!');
     this.str = (this.props.children || '').replaceAll(' ', '\xa0');
     this.iteration = !this.props.rewind ? 0 : this.str.length - 1;
     this.stopped = false;
