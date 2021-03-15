@@ -89,13 +89,18 @@ body {
   font-size: 3vw;
 }
 
-.under-contruction div:first-child{
+.under-contruction > div{
   width:75%;
   transform: rotateZ(1deg);
   box-shadow: .2rem .2rem .05rem  rgb(173, 98, 0);
   background-color:  rgb(255, 145, 0);
   color:white;
-  text-align: center;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+.under-contruction > div span{
+  text-align: right;
 }
 
 .bottom{
