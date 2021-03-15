@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { Component } from 'react';
 import Typo from './typo';
 interface Props {
@@ -40,13 +39,12 @@ interface Props {
     onStop?: (text: Text) => void;
 }
 interface State {
-    display: JSX.Element[] | JSX.Element;
+    display: JSX.Element[] | JSX.Element | null;
 }
 export default class Text extends Component<Props, State> {
     private stopped;
-    private timeout;
+    private interval;
     str: string;
-    interval: NodeJS.Timeout;
     iteration: number;
     constructor(props: Props);
     componentDidMount(): void;

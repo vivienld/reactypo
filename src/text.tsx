@@ -48,16 +48,15 @@ interface Props {
 }
 
 interface State {
-    display: JSX.Element[] | JSX.Element;
+    display: JSX.Element[] | JSX.Element | null;
 }
 
 export default class Text extends Component<Props, State> {
 
     private stopped: boolean;
-    private timeout: NodeJS.Timeout;
+    private interval: NodeJS.Timeout;
 
     str: string;
-    interval: NodeJS.Timeout;
     iteration: number;
 
     constructor(props: Props) {
@@ -74,8 +73,11 @@ export default class Text extends Component<Props, State> {
 
 
     init() {
-        this.iteration = !this.props.rewind ? 0 : this.str.length - 1;
+        this.iteration = !this.props.rewind || this.props.parent?.props.rewind ? 0 : this.str.length - 1;
         this.stopped = false;
+        this.setState({
+            display: null
+        })
     }
     
     run() {
@@ -86,13 +88,13 @@ export default class Text extends Component<Props, State> {
     }
 
     updateInterval() {
-        clearInterval(this.timeout);
+        clearInterval(this.interval);
         let pace = this.str[this.iteration] != '\xa0'
             ? this.props.pace || this.props.parent?.props.pace || defaultPace
             : (this.props.whiteSpacePace || this.props.parent?.props.whiteSpacePace || this.props.pace || defaultPace);
 
         this.onStart();
-        this.timeout = setInterval(() => this.play(), pace);
+        this.interval = setInterval(() => this.play(), pace);
     }
 
     play() {
@@ -123,7 +125,6 @@ export default class Text extends Component<Props, State> {
                         (!rewind && this.iteration > this.str.length)
                     ) {
                         this.stop();
-                        console.log('stop' + this.str)
                     } else {
                         this.onChar();
                     }
@@ -176,6 +177,7 @@ export default class Text extends Component<Props, State> {
     }
 
     onStop() {
+        clearInterval(this.interval);
         this.props.onStop?.(this);
         this.props?.parent?.play();
     }
