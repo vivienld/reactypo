@@ -43,7 +43,6 @@ interface State {
     display: JSX.Element[] | JSX.Element;
 }
 export default class Text extends Component<Props, State> {
-    private initiated;
     private stopped;
     private timeout;
     str: string;
@@ -52,6 +51,7 @@ export default class Text extends Component<Props, State> {
     constructor(props: Props);
     componentDidMount(): void;
     init(): void;
+    updateInterval(): void;
     play(): void;
     replay(): void;
     show(): void;

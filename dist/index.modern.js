@@ -8,110 +8,99 @@ const spanStyle = {
 class Text extends Component {
   constructor(props) {
     super(props);
-    this.init();
+    this.str = (this.props.children || '').replaceAll(' ', '\xa0');
   }
 
   componentDidMount() {
     if (!this.props.parent) {
+      this.init();
       this.play();
     }
   }
 
   init() {
-    clearTimeout(this.timeout);
-    this.str = (this.props.children || '').replaceAll(' ', '\xa0');
+    var _this$props$parent;
+
+    const pause = this.props.pause || ((_this$props$parent = this.props.parent) === null || _this$props$parent === void 0 ? void 0 : _this$props$parent.props.pause) || defaultPause;
     this.iteration = !this.props.rewind ? 0 : this.str.length - 1;
     this.stopped = false;
+    setTimeout(() => {
+      this.updateInterval();
+    }, pause);
+  }
+
+  updateInterval() {
+    var _this$props$parent2, _this$props$parent3;
+
+    clearInterval(this.timeout);
+    let pace = this.str[this.iteration] != '\xa0' ? this.props.pace || ((_this$props$parent2 = this.props.parent) === null || _this$props$parent2 === void 0 ? void 0 : _this$props$parent2.props.pace) || defaultPace : this.props.whiteSpacePace || ((_this$props$parent3 = this.props.parent) === null || _this$props$parent3 === void 0 ? void 0 : _this$props$parent3.props.whiteSpacePace) || this.props.pace || defaultPace;
+    this.onStart();
+    this.timeout = setInterval(() => this.play(), pace);
   }
 
   play() {
     if (!this.stopped) {
-      let pace;
+      var _this$props$parent4, _this$props$parent5;
 
-      if (!this.initiated) {
-        var _this$props$parent;
+      const stamp = this.props.stamp || ((_this$props$parent4 = this.props.parent) === null || _this$props$parent4 === void 0 ? void 0 : _this$props$parent4.props.stamp);
+      const rewind = this.props.rewind || ((_this$props$parent5 = this.props.parent) === null || _this$props$parent5 === void 0 ? void 0 : _this$props$parent5.props.rewind);
 
-        this.init();
-        this.onStart();
-        this.initiated = true;
-        pace = this.props.pause || ((_this$props$parent = this.props.parent) === null || _this$props$parent === void 0 ? void 0 : _this$props$parent.props.pause) || defaultPause;
-      } else if (this.str[this.iteration] != '\xa0') {
-        var _this$props$parent2;
+      if (!stamp) {
+        const chars = this.str.substr(0, this.iteration + 1).split('');
+        let display;
 
-        pace = this.props.pace || ((_this$props$parent2 = this.props.parent) === null || _this$props$parent2 === void 0 ? void 0 : _this$props$parent2.props.pace) || defaultPace;
-      } else {
-        var _this$props$parent3;
-
-        pace = this.props.whiteSpacePace || ((_this$props$parent3 = this.props.parent) === null || _this$props$parent3 === void 0 ? void 0 : _this$props$parent3.props.whiteSpacePace) || this.props.pace || defaultPace;
-      }
-
-      console.log(pace);
-      this.timeout = setTimeout(() => {
-        var _this$props$parent4, _this$props$parent5;
-
-        const stamp = this.props.stamp || ((_this$props$parent4 = this.props.parent) === null || _this$props$parent4 === void 0 ? void 0 : _this$props$parent4.props.stamp);
-        const rewind = this.props.rewind || ((_this$props$parent5 = this.props.parent) === null || _this$props$parent5 === void 0 ? void 0 : _this$props$parent5.props.rewind);
-
-        if (!stamp) {
-          const chars = this.str.substr(0, this.iteration + 1).split('');
-          let display;
-
-          if (rewind) {
-            display = chars.map((char, i) => {
-              return React.createElement("span", {
-                style: spanStyle,
-                key: i
-              }, char);
-            });
-            display.pop();
-            display.push(React.createElement("span", {
+        if (rewind) {
+          display = chars.map((char, i) => {
+            return React.createElement("span", {
               style: spanStyle,
-              className: this.props.charClassName,
-              key: Date.now()
-            }, chars.slice(-1)));
-          } else {
-            display = chars.map((char, i) => {
-              return React.createElement("span", {
-                style: spanStyle,
-                className: this.props.charClassName,
-                key: i
-              }, char);
-            });
-          }
-
-          this.setState({
-            display
-          }, () => {
-            this.iteration += rewind ? -1 : 1;
-
-            if (rewind && this.iteration < -1 || !rewind && this.iteration > this.str.length) {
-              this.stop();
-            } else {
-              this.onChar();
-            }
+              key: i
+            }, char);
           });
+          display.pop();
+          display.push(React.createElement("span", {
+            style: spanStyle,
+            className: this.props.charClassName,
+            key: Date.now()
+          }, chars.slice(-1)));
         } else {
-          this.setState({
-            display: React.createElement("span", {
+          display = chars.map((char, i) => {
+            return React.createElement("span", {
               style: spanStyle,
               className: this.props.charClassName,
-              key: Date.now()
-            }, this.str)
-          }, () => {
-            this.iteration = rewind ? 0 : this.props.children.length - 1;
-            this.onChar();
-            this.stop();
+              key: i
+            }, char);
           });
         }
 
-        this.play();
-      }, pace);
+        this.setState({
+          display
+        }, () => {
+          this.iteration += rewind ? -1 : 1;
+
+          if (rewind && this.iteration < -1 || !rewind && this.iteration > this.str.length) {
+            this.stop();
+          } else {
+            this.onChar();
+          }
+        });
+      } else {
+        this.setState({
+          display: React.createElement("span", {
+            style: spanStyle,
+            className: this.props.charClassName,
+            key: Date.now()
+          }, this.str)
+        }, () => {
+          this.iteration = rewind ? 0 : this.props.children.length - 1;
+          this.onChar();
+          this.stop();
+        });
+      }
     }
   }
 
   replay() {
     this.init();
-    this.play();
   }
 
   show() {

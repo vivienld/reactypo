@@ -53,97 +53,94 @@ interface State {
 
 export default class Text extends Component<Props, State> {
 
-    private initiated: boolean;
     private stopped: boolean;
     private timeout: NodeJS.Timeout;
-    
+
     str: string;
     interval: NodeJS.Timeout;
     iteration: number;
 
     constructor(props: Props) {
         super(props);
-        this.init();
+        this.str = (this.props.children as string || '').replaceAll(' ', '\xa0');
     }
 
     componentDidMount() {
         if (!this.props.parent) {
+            this.init();
             this.play();
         }
     }
 
+
     init() {
-        clearTimeout(this.timeout);
-        this.str = (this.props.children as string || '').replaceAll(' ', '\xa0');
+        const pause = this.props.pause || this.props.parent?.props.pause || defaultPause;
+
+
         this.iteration = !this.props.rewind ? 0 : this.str.length - 1;
         this.stopped = false;
+
+        setTimeout(() => {
+            this.updateInterval();
+        }, pause);
+    }
+    
+    updateInterval() {
+        clearInterval(this.timeout);
+        let pace = this.str[this.iteration] != '\xa0'
+            ? this.props.pace || this.props.parent?.props.pace || defaultPace
+            : (this.props.whiteSpacePace || this.props.parent?.props.whiteSpacePace || this.props.pace || defaultPace);
+
+        this.onStart();
+        this.timeout = setInterval(() => this.play(), pace);
     }
 
     play() {
         if (!this.stopped) {
-            let pace;
-            if (!this.initiated) {
-                this.init();
-                this.onStart();
-                this.initiated = true;
-                pace = this.props.pause || this.props.parent?.props.pause || defaultPause;
-            } else if (this.str[this.iteration] != '\xa0') {
-                pace = this.props.pace || this.props.parent?.props.pace || defaultPace;
-            } else {
-                pace = (this.props.whiteSpacePace || this.props.parent?.props.whiteSpacePace || this.props.pace || defaultPace);
-            }
-            
-            console.log(pace);
+            const stamp = this.props.stamp || this.props.parent?.props.stamp;
+            const rewind = this.props.rewind || this.props.parent?.props.rewind;
 
-            this.timeout = setTimeout(() => {
+            if (!stamp) {
+                const chars = this.str.substr(0, this.iteration + 1).split('');
+                let display;
 
-                const stamp = this.props.stamp || this.props.parent?.props.stamp;
-                const rewind = this.props.rewind || this.props.parent?.props.rewind;
-
-                if (!stamp) {
-                    const chars = this.str.substr(0, this.iteration + 1).split('');
-                    let display;
-
-                    if (rewind) {
-                        display = chars.map((char, i) => {
-                            return <span style={spanStyle} key={i}>{char}</span>
-                        });
-                        display.pop();
-                        display.push(<span style={spanStyle} className={this.props.charClassName} key={Date.now()}>{chars.slice(-1)}</span>)
-                    } else {
-                        display = chars.map((char, i) => {
-                            return <span style={spanStyle} className={this.props.charClassName} key={i}>{char}</span>
-                        });
-                    }
-                    this.setState({ display }, () => {
-
-                        this.iteration += rewind ? -1 : 1;
-                        if (
-                            (rewind && this.iteration < -1) ||
-                            (!rewind && this.iteration > this.str.length)
-                        ) {
-                            this.stop();
-                        } else {
-                            this.onChar();
-                        }
-                    })
+                if (rewind) {
+                    display = chars.map((char, i) => {
+                        return <span style={spanStyle} key={i}>{char}</span>
+                    });
+                    display.pop();
+                    display.push(<span style={spanStyle} className={this.props.charClassName} key={Date.now()}>{chars.slice(-1)}</span>)
                 } else {
-                    this.setState({
-                        display: <span style={spanStyle} className={this.props.charClassName} key={Date.now()}>{this.str}</span>
-                    }, () => {
-                        this.iteration = rewind ? 0 : (this.props.children as string).length - 1;
-                        this.onChar();
-                        this.stop();
-                    })
+                    display = chars.map((char, i) => {
+                        return <span style={spanStyle} className={this.props.charClassName} key={i}>{char}</span>
+                    });
                 }
-                this.play();
-            }, pace)
+                this.setState({ display }, () => {
+
+                    this.iteration += rewind ? -1 : 1;
+                    if (
+                        (rewind && this.iteration < -1) ||
+                        (!rewind && this.iteration > this.str.length)
+                    ) {
+                        this.stop();
+                    } else {
+                        this.onChar();
+                    }
+                })
+            } else {
+                this.setState({
+                    display: <span style={spanStyle} className={this.props.charClassName} key={Date.now()}>{this.str}</span>
+                }, () => {
+                    this.iteration = rewind ? 0 : (this.props.children as string).length - 1;
+                    this.onChar();
+                    this.stop();
+                })
+            }
         }
     }
 
     replay() {
         this.init();
-        this.play();
     }
 
     show() {

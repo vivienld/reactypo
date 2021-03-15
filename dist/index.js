@@ -32,9 +32,7 @@ var Text = /*#__PURE__*/function (_Component) {
     var _this;
 
     _this = _Component.call(this, props) || this;
-
-    _this.init();
-
+    _this.str = (_this.props.children || '').replaceAll(' ', '\xa0');
     return _this;
   }
 
@@ -42,110 +40,103 @@ var Text = /*#__PURE__*/function (_Component) {
 
   _proto.componentDidMount = function componentDidMount() {
     if (!this.props.parent) {
+      this.init();
       this.play();
     }
   };
 
   _proto.init = function init() {
-    clearTimeout(this.timeout);
-    this.str = (this.props.children || '').replaceAll(' ', '\xa0');
+    var _this$props$parent,
+        _this2 = this;
+
+    var pause = this.props.pause || ((_this$props$parent = this.props.parent) === null || _this$props$parent === void 0 ? void 0 : _this$props$parent.props.pause) || defaultPause;
     this.iteration = !this.props.rewind ? 0 : this.str.length - 1;
     this.stopped = false;
+    setTimeout(function () {
+      _this2.updateInterval();
+    }, pause);
+  };
+
+  _proto.updateInterval = function updateInterval() {
+    var _this$props$parent2,
+        _this$props$parent3,
+        _this3 = this;
+
+    clearInterval(this.timeout);
+    var pace = this.str[this.iteration] != '\xa0' ? this.props.pace || ((_this$props$parent2 = this.props.parent) === null || _this$props$parent2 === void 0 ? void 0 : _this$props$parent2.props.pace) || defaultPace : this.props.whiteSpacePace || ((_this$props$parent3 = this.props.parent) === null || _this$props$parent3 === void 0 ? void 0 : _this$props$parent3.props.whiteSpacePace) || this.props.pace || defaultPace;
+    this.onStart();
+    this.timeout = setInterval(function () {
+      return _this3.play();
+    }, pace);
   };
 
   _proto.play = function play() {
-    var _this2 = this;
+    var _this4 = this;
 
     if (!this.stopped) {
-      var pace;
+      var _this$props$parent4, _this$props$parent5;
 
-      if (!this.initiated) {
-        var _this$props$parent;
+      var stamp = this.props.stamp || ((_this$props$parent4 = this.props.parent) === null || _this$props$parent4 === void 0 ? void 0 : _this$props$parent4.props.stamp);
+      var rewind = this.props.rewind || ((_this$props$parent5 = this.props.parent) === null || _this$props$parent5 === void 0 ? void 0 : _this$props$parent5.props.rewind);
 
-        this.init();
-        this.onStart();
-        this.initiated = true;
-        pace = this.props.pause || ((_this$props$parent = this.props.parent) === null || _this$props$parent === void 0 ? void 0 : _this$props$parent.props.pause) || defaultPause;
-      } else if (this.str[this.iteration] != '\xa0') {
-        var _this$props$parent2;
+      if (!stamp) {
+        var chars = this.str.substr(0, this.iteration + 1).split('');
+        var display;
 
-        pace = this.props.pace || ((_this$props$parent2 = this.props.parent) === null || _this$props$parent2 === void 0 ? void 0 : _this$props$parent2.props.pace) || defaultPace;
-      } else {
-        var _this$props$parent3;
-
-        pace = this.props.whiteSpacePace || ((_this$props$parent3 = this.props.parent) === null || _this$props$parent3 === void 0 ? void 0 : _this$props$parent3.props.whiteSpacePace) || this.props.pace || defaultPace;
-      }
-
-      console.log(pace);
-      this.timeout = setTimeout(function () {
-        var _this2$props$parent, _this2$props$parent2;
-
-        var stamp = _this2.props.stamp || ((_this2$props$parent = _this2.props.parent) === null || _this2$props$parent === void 0 ? void 0 : _this2$props$parent.props.stamp);
-        var rewind = _this2.props.rewind || ((_this2$props$parent2 = _this2.props.parent) === null || _this2$props$parent2 === void 0 ? void 0 : _this2$props$parent2.props.rewind);
-
-        if (!stamp) {
-          var chars = _this2.str.substr(0, _this2.iteration + 1).split('');
-
-          var display;
-
-          if (rewind) {
-            display = chars.map(function (_char, i) {
-              return React__default.createElement("span", {
-                style: spanStyle,
-                key: i
-              }, _char);
-            });
-            display.pop();
-            display.push(React__default.createElement("span", {
+        if (rewind) {
+          display = chars.map(function (_char, i) {
+            return React__default.createElement("span", {
               style: spanStyle,
-              className: _this2.props.charClassName,
-              key: Date.now()
-            }, chars.slice(-1)));
-          } else {
-            display = chars.map(function (_char2, i) {
-              return React__default.createElement("span", {
-                style: spanStyle,
-                className: _this2.props.charClassName,
-                key: i
-              }, _char2);
-            });
-          }
-
-          _this2.setState({
-            display: display
-          }, function () {
-            _this2.iteration += rewind ? -1 : 1;
-
-            if (rewind && _this2.iteration < -1 || !rewind && _this2.iteration > _this2.str.length) {
-              _this2.stop();
-            } else {
-              _this2.onChar();
-            }
+              key: i
+            }, _char);
           });
+          display.pop();
+          display.push(React__default.createElement("span", {
+            style: spanStyle,
+            className: this.props.charClassName,
+            key: Date.now()
+          }, chars.slice(-1)));
         } else {
-          _this2.setState({
-            display: React__default.createElement("span", {
+          display = chars.map(function (_char2, i) {
+            return React__default.createElement("span", {
               style: spanStyle,
-              className: _this2.props.charClassName,
-              key: Date.now()
-            }, _this2.str)
-          }, function () {
-            _this2.iteration = rewind ? 0 : _this2.props.children.length - 1;
-
-            _this2.onChar();
-
-            _this2.stop();
+              className: _this4.props.charClassName,
+              key: i
+            }, _char2);
           });
         }
 
-        _this2.play();
-      }, pace);
+        this.setState({
+          display: display
+        }, function () {
+          _this4.iteration += rewind ? -1 : 1;
+
+          if (rewind && _this4.iteration < -1 || !rewind && _this4.iteration > _this4.str.length) {
+            _this4.stop();
+          } else {
+            _this4.onChar();
+          }
+        });
+      } else {
+        this.setState({
+          display: React__default.createElement("span", {
+            style: spanStyle,
+            className: this.props.charClassName,
+            key: Date.now()
+          }, this.str)
+        }, function () {
+          _this4.iteration = rewind ? 0 : _this4.props.children.length - 1;
+
+          _this4.onChar();
+
+          _this4.stop();
+        });
+      }
     }
   };
 
   _proto.replay = function replay() {
     this.init();
-    this.play();
   };
 
   _proto.show = function show() {
@@ -174,14 +165,14 @@ var Text = /*#__PURE__*/function (_Component) {
   };
 
   _proto.onChar = function onChar() {
-    var _this$props$parent4, _this$props$onChar, _this$props2, _this$props$parent5, _this$props$parent5$p, _this$props$parent5$p2;
+    var _this$props$parent6, _this$props$onChar, _this$props2, _this$props$parent7, _this$props$parent7$p, _this$props$parent7$p2;
 
-    var rewind = ((_this$props$parent4 = this.props.parent) === null || _this$props$parent4 === void 0 ? void 0 : _this$props$parent4.props.rewind) || this.props.rewind;
+    var rewind = ((_this$props$parent6 = this.props.parent) === null || _this$props$parent6 === void 0 ? void 0 : _this$props$parent6.props.rewind) || this.props.rewind;
 
     var _char4 = rewind ? this.str[this.iteration + 1] : this.str[this.iteration - 1];
 
     (_this$props$onChar = (_this$props2 = this.props).onChar) === null || _this$props$onChar === void 0 ? void 0 : _this$props$onChar.call(_this$props2, _char4, this);
-    (_this$props$parent5 = this.props.parent) === null || _this$props$parent5 === void 0 ? void 0 : (_this$props$parent5$p = (_this$props$parent5$p2 = _this$props$parent5.props).onChar) === null || _this$props$parent5$p === void 0 ? void 0 : _this$props$parent5$p.call(_this$props$parent5$p2, _char4, this.props.parent);
+    (_this$props$parent7 = this.props.parent) === null || _this$props$parent7 === void 0 ? void 0 : (_this$props$parent7$p = (_this$props$parent7$p2 = _this$props$parent7.props).onChar) === null || _this$props$parent7$p === void 0 ? void 0 : _this$props$parent7$p.call(_this$props$parent7$p2, _char4, this.props.parent);
   };
 
   _proto.onStop = function onStop() {
