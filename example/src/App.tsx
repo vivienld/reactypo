@@ -13,7 +13,7 @@ const App = () => {
       </Typo>
 
       <div className="under-contruction">
-        <Text loop pace={200}>This documentation is under construction</Text>
+        <Text loop pace={40}>This documentation is under construction</Text>
       </div>
       <input type="button" className="bottom" onClick={() => Typo.play('title')} value="Replay!" />
     </main>

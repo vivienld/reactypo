@@ -45,6 +45,7 @@ class Text extends Component {
         pace = this.props.whiteSpacePace || ((_this$props$parent3 = this.props.parent) === null || _this$props$parent3 === void 0 ? void 0 : _this$props$parent3.props.whiteSpacePace) || this.props.pace || defaultPace;
       }
 
+      console.log(pace);
       this.timeout = setTimeout(() => {
         var _this$props$parent4, _this$props$parent5;
 

@@ -92,6 +92,8 @@ export default class Text extends Component<Props, State> {
             } else {
                 pace = (this.props.whiteSpacePace || this.props.parent?.props.whiteSpacePace || this.props.pace || defaultPace);
             }
+            
+            console.log(pace);
 
             this.timeout = setTimeout(() => {
 
