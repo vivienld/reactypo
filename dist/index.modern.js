@@ -18,6 +18,7 @@ class Text extends Component {
   }
 
   init() {
+    clearTimeout(this.timeout);
     this.str = (this.props.children || '').replaceAll(' ', '\xa0');
     this.iteration = !this.props.rewind ? 0 : this.str.length - 1;
     this.stopped = false;
@@ -41,10 +42,10 @@ class Text extends Component {
       } else {
         var _this$props$parent3;
 
-        pace = this.props.whiteSpacePace || ((_this$props$parent3 = this.props.parent) === null || _this$props$parent3 === void 0 ? void 0 : _this$props$parent3.props.whiteSpacePace) || defaultPace;
+        pace = this.props.whiteSpacePace || ((_this$props$parent3 = this.props.parent) === null || _this$props$parent3 === void 0 ? void 0 : _this$props$parent3.props.whiteSpacePace) || this.props.pace || defaultPace;
       }
 
-      setTimeout(() => {
+      this.timeout = setTimeout(() => {
         var _this$props$parent4, _this$props$parent5;
 
         const stamp = this.props.stamp || ((_this$props$parent4 = this.props.parent) === null || _this$props$parent4 === void 0 ? void 0 : _this$props$parent4.props.stamp);
@@ -122,7 +123,11 @@ class Text extends Component {
   }
 
   stop() {
-    this.onStop();
+    if (this.props.loop) {
+      this.replay();
+    } else {
+      this.onStop();
+    }
   }
 
   onStart() {

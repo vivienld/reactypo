@@ -21,6 +21,8 @@ interface Props {
     stamp?: boolean;
     /** Prints the chars in the Text backwards */
     rewind?: boolean;
+    /** Loops the animation */
+    loop?: boolean;
     /** The Typo controller. Is automatically defined when a Text is in a Typo */
     parent?: Typo;
     /** The className assigned to every printed char */
@@ -53,7 +55,8 @@ export default class Text extends Component<Props, State> {
 
     private initiated: boolean;
     private stopped: boolean;
-
+    private timeout: NodeJS.Timeout;
+    
     str: string;
     interval: NodeJS.Timeout;
     iteration: number;
@@ -62,19 +65,20 @@ export default class Text extends Component<Props, State> {
         super(props);
         this.init();
     }
-    
+
     componentDidMount() {
         if (!this.props.parent) {
             this.play();
         }
     }
-    
+
     init() {
+        clearTimeout(this.timeout);
         this.str = (this.props.children as string || '').replaceAll(' ', '\xa0');
         this.iteration = !this.props.rewind ? 0 : this.str.length - 1;
         this.stopped = false;
     }
-    
+
     play() {
         if (!this.stopped) {
             let pace;
@@ -86,18 +90,18 @@ export default class Text extends Component<Props, State> {
             } else if (this.str[this.iteration] != '\xa0') {
                 pace = this.props.pace || this.props.parent?.props.pace || defaultPace;
             } else {
-                pace = (this.props.whiteSpacePace || this.props.parent?.props.whiteSpacePace || defaultPace);
+                pace = (this.props.whiteSpacePace || this.props.parent?.props.whiteSpacePace || this.props.pace || defaultPace);
             }
 
-            setTimeout(() => {
+            this.timeout = setTimeout(() => {
 
                 const stamp = this.props.stamp || this.props.parent?.props.stamp;
                 const rewind = this.props.rewind || this.props.parent?.props.rewind;
-            
+
                 if (!stamp) {
                     const chars = this.str.substr(0, this.iteration + 1).split('');
                     let display;
-                
+
                     if (rewind) {
                         display = chars.map((char, i) => {
                             return <span style={spanStyle} key={i}>{char}</span>
@@ -110,7 +114,7 @@ export default class Text extends Component<Props, State> {
                         });
                     }
                     this.setState({ display }, () => {
-                    
+
                         this.iteration += rewind ? -1 : 1;
                         if (
                             (rewind && this.iteration < -1) ||
@@ -147,7 +151,11 @@ export default class Text extends Component<Props, State> {
     }
 
     stop() {
-        this.onStop();
+        if (this.props.loop) {
+            this.replay();
+        } else {
+            this.onStop();
+        }
     }
 
     onStart() {

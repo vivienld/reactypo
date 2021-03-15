@@ -14,6 +14,8 @@ interface Props {
     stamp?: boolean;
     /** Prints the chars in the Text backwards */
     rewind?: boolean;
+    /** Loops the animation */
+    loop?: boolean;
     /** The Typo controller. Is automatically defined when a Text is in a Typo */
     parent?: Typo;
     /** The className assigned to every printed char */
@@ -43,6 +45,7 @@ interface State {
 export default class Text extends Component<Props, State> {
     private initiated;
     private stopped;
+    private timeout;
     str: string;
     interval: NodeJS.Timeout;
     iteration: number;

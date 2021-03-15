@@ -47,6 +47,7 @@ var Text = /*#__PURE__*/function (_Component) {
   };
 
   _proto.init = function init() {
+    clearTimeout(this.timeout);
     this.str = (this.props.children || '').replaceAll(' ', '\xa0');
     this.iteration = !this.props.rewind ? 0 : this.str.length - 1;
     this.stopped = false;
@@ -72,10 +73,10 @@ var Text = /*#__PURE__*/function (_Component) {
       } else {
         var _this$props$parent3;
 
-        pace = this.props.whiteSpacePace || ((_this$props$parent3 = this.props.parent) === null || _this$props$parent3 === void 0 ? void 0 : _this$props$parent3.props.whiteSpacePace) || defaultPace;
+        pace = this.props.whiteSpacePace || ((_this$props$parent3 = this.props.parent) === null || _this$props$parent3 === void 0 ? void 0 : _this$props$parent3.props.whiteSpacePace) || this.props.pace || defaultPace;
       }
 
-      setTimeout(function () {
+      this.timeout = setTimeout(function () {
         var _this2$props$parent, _this2$props$parent2;
 
         var stamp = _this2.props.stamp || ((_this2$props$parent = _this2.props.parent) === null || _this2$props$parent === void 0 ? void 0 : _this2$props$parent.props.stamp);
@@ -158,7 +159,11 @@ var Text = /*#__PURE__*/function (_Component) {
   };
 
   _proto.stop = function stop() {
-    this.onStop();
+    if (this.props.loop) {
+      this.replay();
+    } else {
+      this.onStop();
+    }
   };
 
   _proto.onStart = function onStart() {
