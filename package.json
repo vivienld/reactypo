@@ -1,6 +1,6 @@
 {
   "name": "reactypo",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Reactypo is a react library that makes it easy to control and animate text.",
   "author": "vivienld",
   "license": "MIT",
@@ -12,8 +12,8 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "microbundle-crl --no-compress --format modern,cjs",
-    "start": "microbundle-crl watch --no-compress --format modern,cjs",
+    "build": "microbundle-crl --sourcemap false --format modern,cjs",
+    "start": "microbundle-crl --sourcemap false watch --format modern,cjs",
     "prepare": "run-s build",
     "test": "run-s test:unit test:lint test:build",
     "test:build": "run-s build",
@@ -21,7 +21,8 @@
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
     "predeploy": "cd example && yarn install && yarn run build",
-    "deploy": "gh-pages -d example/build"
+    "deploy": "gh-pages -d example/build",
+    "minify": "uglifyjs dist/index.js -o dist/index.js && uglifyjs dist/index.modern.js -o dist/index.modern.js"
   },
   "peerDependencies": {
     "react": "^16.0.0"
