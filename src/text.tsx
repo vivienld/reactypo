@@ -60,6 +60,7 @@ export default class Text extends Component<Props, State> {
 
     str: string;
     iteration: number;
+    lastChar: string;
 
     constructor(props: Props) {
         super(props);
@@ -80,6 +81,7 @@ export default class Text extends Component<Props, State> {
         this.setState({
             display: null
         })
+        this.onStart();
     }
     
     run() {
@@ -92,14 +94,26 @@ export default class Text extends Component<Props, State> {
     updateInterval() {
         clearInterval(this.interval);
         let pace = this.str[this.iteration] != '\xa0'
-            ? this.props.pace || this.props.parent?.props.pace || defaultPace
-            : (this.props.whiteSpacePace || this.props.parent?.props.whiteSpacePace || this.props.pace || defaultPace);
+        ? this.props.pace || this.props.parent?.props.pace || defaultPace
+        : (this.props.whiteSpacePace || this.props.parent?.props.whiteSpacePace || this.props.pace || defaultPace);
+        
+        console.log(this.iteration, this.str, 'char', this.str[this.iteration], 'pace', pace)
 
-        this.onStart();
         this.interval = setInterval(() => this.play(), pace);
     }
 
+    checkForWhiteSpace() {
+        if (this.str[this.iteration] == '\xa0' && this.lastChar != '\xa0') {
+            this.updateInterval();
+        } else if (this.str[this.iteration] != '\xa0' && this.lastChar == '\xa0') {
+            this.updateInterval();
+        }
+        this.lastChar = this.str[this.iteration];
+    }
+
     play() {
+        this.checkForWhiteSpace();
+
         if (!this.stopped) {
             const stamp = this.props.stamp || this.props.parent?.props.stamp;
             const rewind = this.props.rewind || this.props.parent?.props.rewind;

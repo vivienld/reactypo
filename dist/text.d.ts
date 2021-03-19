@@ -48,11 +48,13 @@ export default class Text extends Component<Props, State> {
     private interval;
     str: string;
     iteration: number;
+    lastChar: string;
     constructor(props: Props);
     componentDidMount(): void;
     init(): void;
     run(): void;
     updateInterval(): void;
+    checkForWhiteSpace(): void;
     play(): void;
     replay(): void;
     show(): void;
