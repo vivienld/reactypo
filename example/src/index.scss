@@ -2,23 +2,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Fascinate&display=swap');
 
-html,body,#root{
-  height:100%;
-}
+:global{
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: Roboto,sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
+  html,body,#root{
+    height:100%;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Roboto,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    
+  }
 }
 
 .main{
   min-height:100%;
   position: relative;
-  margin:2rem 5rem;  
+  padding:2rem 5rem 5rem 5rem;  
 }
 
 .header{

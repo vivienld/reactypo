@@ -51,6 +51,7 @@ export default class Text extends Component<Props, State> {
     lastChar: string;
     constructor(props: Props);
     componentDidMount(): void;
+    componentWillUnmount(): void;
     init(): void;
     run(): void;
     updateInterval(): void;

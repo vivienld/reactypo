@@ -74,6 +74,9 @@ export default class Text extends Component<Props, State> {
         }
     }
 
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
 
     init() {
         this.iteration = !this.props.rewind || this.props.parent?.props.rewind ? 0 : this.str.length - 1;
@@ -96,8 +99,6 @@ export default class Text extends Component<Props, State> {
         let pace = this.str[this.iteration] != '\xa0'
         ? this.props.pace || this.props.parent?.props.pace || defaultPace
         : (this.props.whiteSpacePace || this.props.parent?.props.whiteSpacePace || this.props.pace || defaultPace);
-        
-        console.log(this.iteration, this.str, 'char', this.str[this.iteration], 'pace', pace)
 
         this.interval = setInterval(() => this.play(), pace);
     }
