@@ -46,7 +46,7 @@ const App = () => {
       <ExampleCard title="Pause the print"
         description='The pause props defines the time before the text starts printing'
         demo={<Text pause={1000}>This text paused for 1 second before printing</Text>}
-        code={`<Text>This text paused for 1 second before printing</Text>`}
+        code={`<Text pause={1000}>This text paused for 1 second before printing</Text>`}
       />
 
     </main>
