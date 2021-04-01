@@ -1,7 +1,6 @@
 import React from 'react'
 import { Text, Typo } from 'reactypo'
 import ExampleCard from './example-card'
-import { Typography } from '@material-ui/core'
 const App = () => {
   return (
     <main className='main'>
@@ -11,10 +10,6 @@ const App = () => {
         <Text pause={200} charClassName="wave-infinite" className="header-title title2" stamp>Reactypo</Text>
         <Text pause={500} whiteSpacePace={100} charClassName=" sub-title-char" className={'sub-title'} block>animate and control text</Text>
       </Typo>
-
-      <>
-        <h2 className="description">These demos show you how to use Reactypo</h2>
-      </>
 
       {/** Animation de base */}
       <ExampleCard title="Simple Print Effect"
@@ -47,6 +42,116 @@ const App = () => {
         description='The pause props defines the time before the text starts printing'
         demo={<Text pause={1000}>This text paused for 1 second before printing</Text>}
         code={`<Text pause={1000}>This text paused for 1 second before printing</Text>`}
+      />
+      {/** Mettre en block */}
+      <ExampleCard title="Text as a block"
+        description='A <Text /> component is displayed as inline-block by default. This props displays it as a block'
+        demo={
+          <Typo>
+
+            <Text>I'm inline. </Text>
+            <Text>Me too! </Text>
+            <Text block>I'm a block. </Text>
+            <Text block>Omg me too! </Text>
+          </Typo>
+        }
+        code={
+          `<Typo>
+  <Text>I'm inline. </Text>
+  <Text>Me too! </Text>
+  <Text block>I'm a block. </Text>
+  <Text block>Omg me too! </Text>
+</Typo>`
+        }
+      />
+
+      {/** Stamp */}
+      <ExampleCard title="Text as a stamp"
+        description='By default, every char is display one after another. 
+        Defining a &lt;Text /&gt; as stamps displays every char at the same time.'
+        demo={
+          <Typo>
+            {Array(8).fill(0).map((_, i) => <Text key={i} pace={500} stamp>Stamp! </Text>)}
+          </Typo>
+        }
+        code={
+          `<Typo>
+    <Text stamp>Stamp! </Text>
+    <Text stamp>Stamps! </Text>
+</Typo>`}
+      />
+      {/** Rewind */}
+      <ExampleCard title="Rewind"
+        description='Chars can be printed backwards'
+        demo={<Text rewind>ok bye! What's going on????</Text>}
+        code={`<Text rewind>ok bye! What's going on????</Text>`}
+      />
+      {/** Events */}
+      <ExampleCard title="Callbacks"
+        description='You can trigger callbacks according to the Text state. Check the console!'
+        demo={<Text
+          onStart={text => console.log("Print started")}
+          onChar={char => console.log("Printed " + char)}
+          onStop={text => console.log("Print stopped")}
+        >I'm a super inspired sentence...</Text>}
+        code={`<Text
+          onStart={text => console.log("Print started")}
+          onChar={char => console.log("Printed " + char)}
+          onStop={text => console.log("Print stopped")}
+        >I'm a super inspired sentence...</Text>`}
+      />
+
+      {/** Typo */}
+      <ExampleCard title="The <Typo /> Component"
+        description='You may have seen in the "Text as a Stamp" example that the <Text /> components were following each others. 
+        This is due to the <Typo /> component. A <Text /> component in a <Typo /> will wait the end of the previous one.'
+        demo={
+          <Typo>
+            <Text >I'm the first text. </Text>
+            <Text >I'm the second. </Text>
+            <Text >I'm the third. </Text>
+          </Typo>}
+        code={`
+        <Typo>
+            <Text >I'm the first text. </Text>
+            <Text >I'm the second. </Text>
+            <Text >I'm the third. </Text>
+          </Typo>
+        `}
+      />
+
+      {/** Ordre d'appel */}
+      <ExampleCard title="Order your <Typo />"
+        description='The <Typo /> component has a "name" props that will identify it. 
+        The "next" props will reference the next <Typo /> to be called and tell it to wait the end of the one referencing it.'
+        demo={
+          <>
+            <div>
+
+              <Typo name="first" next="third">
+                <Text block>I'm the first typo and will call the third typo</Text>
+              </Typo>
+            </div>
+            <div>
+
+              <Typo name="second">
+                <Text block>I'm the second Typo. Everything ends with me.</Text>
+              </Typo>
+            </div>
+            <div>
+              <Typo name="third" next="second">
+                <Text block>I'm the third typo and will call the second typo</Text>
+              </Typo>
+            </div>
+          </>
+        }
+        code={`
+        <Typo>
+            <Text >I'm the first text. </Text>
+            <Text >I'm the second. </Text>
+            <Text >I'm the third. </Text>
+          </Typo>
+        `}
       />
 
     </main>
