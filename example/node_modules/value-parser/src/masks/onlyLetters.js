@@ -1,0 +1,6 @@
+export default function onlyLetters(data) {
+
+  if (!(/^[a-zA-Z\s]*$/g).test(data)) return data.toString().slice(0, -1);
+  return data;
+
+} // onlyLetters

@@ -1,0 +1,28 @@
+export default function number(number, float) {
+
+  number = number + '';
+
+  // If number start with "." / ","
+  // [0-9]\.[0-9]+
+
+  // Valida número de milhares com casas decimais: ^([0-9]{1,3})((\,|\.)[0-9]{3}){1,}((\,|\.)[0-9]{2})$
+
+  // Extrai o número de milhares sem as casas decimais (group 1):
+  // (^([0-9]{1,3})((\,|\.)[0-9]{3}){1,})(?:((\,|\.)[0-9]{2,}))
+  // Extrai a última parte do número para salvar os decimais (group 0): (\,|\.)[0-9]{2}$ 
+
+  // Adiciona separator de decimais : ([0-9]{2})$
+  // Extrai a última parte do número para salvar os decimais (group 0): (\,|\.)[0-9]{2}$ 
+  // Adicionar separator a cada 3 casas ([0-9])(?=([0-9]{3})+(?![0-9]))
+
+  if (number.match('/^[1-9]/')) {
+    number = '0.' + number;
+  }
+
+  console.log(number, float);
+
+
+  // if (!data) return false;
+  // if (typeof data !== 'string') return false;
+  return number;
+} // number

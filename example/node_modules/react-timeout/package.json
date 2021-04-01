@@ -1,0 +1,62 @@
+{
+  "name": "react-timeout",
+  "version": "2.0.1",
+  "description": "HOC for React and React Native providing versions of setTimeout etc. that cancels when unmounted.",
+  "homepage": "https://github.com/plougsgaard/react-timeout",
+  "author": "plougsgaard",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/plougsgaard/react-timeout.git"
+  },
+  "keywords": [
+    "react",
+    "reactjs",
+    "native",
+    "timer",
+    "timeout",
+    "hoc"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/plougsgaard/react-timeout/issues"
+  },
+  "main": "src/index.js",
+  "standard": {
+    "parser": "babel-eslint"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run standard && npm run check-es5 && npm test"
+    }
+  },
+  "scripts": {
+    "check-es5": "jshint src/*.js",
+    "test": "jest",
+    "standard": "standard"
+  },
+  "files": [
+    "src/index.js",
+    "README.md"
+  ],
+  "dependencies": {
+    "hoist-non-react-statics": "^2.3.1",
+    "object-assign": "^4.0.1"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "7.7.4",
+    "@babel/preset-env": "7.7.7",
+    "@babel/preset-react": "7.7.4",
+    "babel-eslint": "10.0.3",
+    "babel-jest": "24.1.0",
+    "babel-polyfill": "6.26.0",
+    "husky": "3.1.0",
+    "jest": "24.1.0",
+    "jest-dom": "3.5.0",
+    "jshint": "2.10.3",
+    "react": "16.13.0",
+    "react-dom": "16.13.0",
+    "react-test-renderer": "16.13.0",
+    "react-testing-library": "6.0.4",
+    "standard": "14.3.1"
+  }
+}
