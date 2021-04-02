@@ -295,6 +295,13 @@ The typo class can manipulate every typo with a name
       <td>Plays the Typo</td>
     </tr>
     <tr>
+      <td>resume</td>
+      <td>
+      typoName:string The name of the Typo component to resume
+      </td>
+      <td>Resumes the Typo</td>
+    </tr>
+    <tr>
       <td>stop</td>
       <td>
       typoName:string The name of the Typo component to stop
