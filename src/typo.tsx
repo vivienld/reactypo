@@ -60,8 +60,14 @@ export default class Typo extends Component<Props, State> {
         Typo.typos.get(typoName)?.replay();
     }
 
+    static resume(typoName: string) {
+        const typo = Typo.typos.get(typoName);
+        typo?.textRefs[typo.iteration - 1]?.current?.resume();
+    }
+
     static stop(typoName: string) {
-        Typo.typos.get(typoName)?.stop();
+        const typo = Typo.typos.get(typoName);
+        typo?.textRefs[typo.iteration - 1]?.current?.stop();
     }
 
     private initiated: boolean;
@@ -78,6 +84,7 @@ export default class Typo extends Component<Props, State> {
             Typo.first = this;
         }
         this.init();
+
     }
 
     componentDidMount() {
@@ -110,31 +117,36 @@ export default class Typo extends Component<Props, State> {
     }
 
     play() {
-        if (!this.initiated) {
-            this.onStart();
-            this.initiated = true;
-        }
-
-        if (
-            (this.props.rewind && this.iteration < 0) || (!this.props.rewind && this.iteration > this.texts.length - 1)) {
-            this.stop();
-        } else {
-            if (this.props.rewind) {
-                for (let i = this.iteration; i >= 0; i--) {
-                    this.textRefs[i].current?.show();
-                }
+            if (!this.initiated) {
+                this.onStart();
+                this.initiated = true;
             }
-
-            this.textRefs[this.iteration]?.current?.init();
-            this.textRefs[this.iteration]?.current?.run();
-
-            this.iteration += this.props.rewind ? -1 : 1;
-            this.onText();
-        }
+            
+            if (
+                (this.props.rewind && this.iteration < 0) || (!this.props.rewind && this.iteration > this.texts.length - 1)) {
+                    this.stop();
+                } else {
+                    if (this.props.rewind) {
+                        for (let i = this.iteration; i >= 0; i--) {
+                            this.textRefs[i].current?.show();
+                        }
+                    }
+                    
+                    this.textRefs[this.iteration]?.current?.init();
+                    this.textRefs[this.iteration]?.current?.run();
+                    
+                    this.iteration += this.props.rewind ? -1 : 1;
+                    this.onText();
+                }
     }
 
     replay() {
         this.init();
+        this.play();
+    }
+    
+    resume() {
+        this.textRefs[this.iteration]?.current?.play();
         this.play();
     }
 

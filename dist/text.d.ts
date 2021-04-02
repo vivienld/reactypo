@@ -60,6 +60,7 @@ export default class Text extends Component<Props, State> {
     replay(): void;
     show(): void;
     stop(): void;
+    resume(): void;
     onStart(): void;
     onChar(): void;
     onStop(): void;

@@ -15,7 +15,7 @@ const App = () => {
       <ExampleCard title="Simple Print Effect"
         description='The <Text /> component is the base component to give your text a type-writer effect. The default pace is 40ms.'
         demo={<Text>I am a &lt;Text /&gt; component without props</Text>}
-        code={`<Text>I am a <Text /> component without props</Text>`}
+        code={`<Text>I am a &lt;Text /&gt; component without props</Text>`}
       />
       {/** Changer le pas */}
       <ExampleCard title="Change the pace"
@@ -27,8 +27,10 @@ const App = () => {
           </div>
         }
         code={
-          `<Text pace={200} block>This <Text /> has a pace of 200</Text>
-<Text pace={10}>This <Text /> has a pace of 10</Text>`
+          `<div>
+            <Text pace={200} block>This &lt;Text /&gt; has a pace of 200</Text>
+            <Text pace={10}>This &lt;Text /&gt; has a pace of 10</Text>
+          </div>`
         }
       />
       {/** Changer le pas des espaces blancs */}
@@ -56,7 +58,7 @@ const App = () => {
           </Typo>
         }
         code={
-          `<Typo>
+`<Typo>
   <Text>I'm inline. </Text>
   <Text>Me too! </Text>
   <Text block>I'm a block. </Text>
@@ -76,9 +78,8 @@ const App = () => {
         }
         code={
           `<Typo>
-    <Text stamp>Stamp! </Text>
-    <Text stamp>Stamps! </Text>
-</Typo>`}
+            {Array(8).fill(0).map((_, i) => <Text key={i} pace={500} stamp>Stamp! </Text>)}
+          </Typo>`}
       />
       {/** Rewind */}
       <ExampleCard title="Rewind"
@@ -211,9 +212,52 @@ const App = () => {
 
       {/** Styling */}
       <ExampleCard title="Styling"
-        description={`Every printed char can be styled through the "charClassName" props of a Text component`}
+        description={`Every printed char can be styled through the "charClassName" props of a Text component. 
+        Define an animation in css and apply the className to the charClassName component.`}
         demo={<Text pace={100} charClassName="bounce-in-top">So much style! I love it.</Text>}
-        code={`<Text rewind>ok bye! What's going on????</Text>`}
+        code={`
+<Text pace={100} charClassName="bounce-in-top">So much style! I love it.</Text>
+
+@-webkit-keyframes bounce-in-top{0%{-webkit-transform:translateY(-500px);transform:translateY(-500px);-webkit-animation-timing-function:ease-in;animation-timing-function:ease-in;opacity:0}38%{-webkit-transform:translateY(0);transform:translateY(0);-webkit-animation-timing-function:ease-out;animation-timing-function:ease-out;opacity:1}55%{-webkit-transform:translateY(-65px);transform:translateY(-65px);-webkit-animation-timing-function:ease-in;animation-timing-function:ease-in}72%{-webkit-transform:translateY(0);transform:translateY(0);-webkit-animation-timing-function:ease-out;animation-timing-function:ease-out}81%{-webkit-transform:translateY(-28px);transform:translateY(-28px);-webkit-animation-timing-function:ease-in;animation-timing-function:ease-in}90%{-webkit-transform:translateY(0);transform:translateY(0);-webkit-animation-timing-function:ease-out;animation-timing-function:ease-out}95%{-webkit-transform:translateY(-8px);transform:translateY(-8px);-webkit-animation-timing-function:ease-in;animation-timing-function:ease-in}100%{-webkit-transform:translateY(0);transform:translateY(0);-webkit-animation-timing-function:ease-out;animation-timing-function:ease-out}}@keyframes bounce-in-top{0%{-webkit-transform:translateY(-500px);transform:translateY(-500px);-webkit-animation-timing-function:ease-in;animation-timing-function:ease-in;opacity:0}38%{-webkit-transform:translateY(0);transform:translateY(0);-webkit-animation-timing-function:ease-out;animation-timing-function:ease-out;opacity:1}55%{-webkit-transform:translateY(-65px);transform:translateY(-65px);-webkit-animation-timing-function:ease-in;animation-timing-function:ease-in}72%{-webkit-transform:translateY(0);transform:translateY(0);-webkit-animation-timing-function:ease-out;animation-timing-function:ease-out}81%{-webkit-transform:translateY(-28px);transform:translateY(-28px);-webkit-animation-timing-function:ease-in;animation-timing-function:ease-in}90%{-webkit-transform:translateY(0);transform:translateY(0);-webkit-animation-timing-function:ease-out;animation-timing-function:ease-out}95%{-webkit-transform:translateY(-8px);transform:translateY(-8px);-webkit-animation-timing-function:ease-in;animation-timing-function:ease-in}100%{-webkit-transform:translateY(0);transform:translateY(0);-webkit-animation-timing-function:ease-out;animation-timing-function:ease-out}}
+.bounce-in-top{-webkit-animation:bounce-in-top 1.1s both;animation:bounce-in-top 1.1s both}
+`}
+      />
+
+      {/** Static méthodes */}
+      <ExampleCard title="Trigger a Typo"
+        description='The Typo class has three static methods: play, stop and resume. 
+        To avoid a Typo component from playing, just give it the "stop" props.
+        Trigger it with Typo.play(nameOfTheTypo). Stop it with Typo.stop(nameOfTheTypo). Resume it with Typo.resume(nameOfTheTypo) '
+        demo={
+          <>
+            <div>
+
+              <Typo stop name="play-me">
+                <Text>You asked me to play? Maybe you want me to stop. I will be a super long text so you have time to stop me... ... ... ... ... long enough? ....</Text>
+              </Typo>
+            </div>
+
+            <div className="button-group">
+              <button onClick={() => Typo.play('play-me')}>play</button>
+              <button onClick={() => Typo.stop('play-me')}>stop</button>
+              <button onClick={() => Typo.resume('play-me')}>resume</button>
+            </div>
+          </>}
+        code={
+          `<>
+            <div>
+
+              <Typo stop name="play-me">
+                <Text>You asked me to play? Maybe you want me to stop. I will be a super long text so you have time to stop me... ... ... ... ... long enough? ....</Text>
+              </Typo>
+            </div>
+
+            <div className="button-group">
+              <button onClick={() => Typo.play('play-me')}>play</button>
+              <button onClick={() => Typo.stop('play-me')}>stop</button>
+              <button onClick={() => Typo.resume('play-me')}>resume</button>
+            </div>
+          </>`}
       />
 
     </main>

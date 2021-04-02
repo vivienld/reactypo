@@ -51,6 +51,7 @@ export default class Typo extends Component<Props, State> {
     private static typos;
     private static first;
     static play(typoName: string): void;
+    static resume(typoName: string): void;
     static stop(typoName: string): void;
     private initiated;
     name: string;
@@ -62,6 +63,7 @@ export default class Typo extends Component<Props, State> {
     init(): void;
     play(): void;
     replay(): void;
+    resume(): void;
     stop(): void;
     onStart(): void;
     onText(): void;

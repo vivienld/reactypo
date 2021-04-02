@@ -182,6 +182,11 @@ export default class Text extends Component<Props, State> {
         }
     }
 
+    resume() {
+        this.stopped = false;
+        this.play();
+    }
+
     onStart() {
         this.props.onStart?.(this);
     }
